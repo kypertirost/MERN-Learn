@@ -1,4 +1,4 @@
-let restaurants;
+var restaurants;
 
 export default class RestaurantsDAO {
     static async injectDB(conn) {

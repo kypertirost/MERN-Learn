@@ -6,4 +6,5 @@ This is the simple restaurant review project using MERN stack. The orinal video 
 
 ## Issues that I run into
 1. When testing the db connection after set the DAO, sever doesn't respond with correct json output with corresponding data in the dataset, and nodemon doesn't log any error. If I add a log statement underneath the `cursor` object, it shows that the session is expired and can no longer access it.
-Solution: It because when injectDB, the collectio name is wrong.
+
+**Solution**: It because when injectDB, the collectio name is wrong.

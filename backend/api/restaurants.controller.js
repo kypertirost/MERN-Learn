@@ -14,7 +14,7 @@ export default class RestaurantsCtrl {
             filters.name = req.query.name;
         }
 
-        const { restaurantsList, totalNumRestaurants } = await RestaurantsDAO.getRestaurants({
+        const { restaurantsList, totalNumberRestaurants } = await RestaurantsDAO.getRestaurants({
             filters,
             page,
             restaurantsPerPage
@@ -25,8 +25,9 @@ export default class RestaurantsCtrl {
             page : page,
             filters : filters,
             entries_per_page : restaurantsPerPage,
-            total_resutls : totalNumRestaurants
+            total_resutls : totalNumberRestaurants
         };
+        
         res.json(response);
     }
 }
