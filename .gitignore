@@ -2,5 +2,6 @@ backend/.env
 backend/node_modules
 .DS_STORE
 
-/jest.config.js
-/babel.config.json
+test
+jest.config.js
+babel.config.json
