@@ -25,7 +25,6 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Format files using Prettier
           title: ${{ format('[AUTO] Format {0} using Prettier', github.event.pull_request.number) }}
           body: ${{ format('[Prettier](https://prettier.io) would suggest these formatting changes against \#{0}.', github.event.pull_request.number) }}
