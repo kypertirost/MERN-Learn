@@ -1,0 +1,33 @@
+name: Code Formatting
+
+on:
+  pull_request:
+    branches:
+      - master
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@v2.5.0
+        with:
+          node-version: '14'
+      - name: Install Prettier Formatter
+        run: npm i prettier
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Format files using Prettier
+          title: ${{ format('[AUTO] Format {0} using Prettier', github.event.pull_request.number) }}
+          body: ${{ format('[Prettier](https://prettier.io) would suggest these formatting changes against \#{0}.', github.event.pull_request.number) }}
+          labels: no changelog
+          branch: ${{ format('code-format/{0}', github.event.pull_request.number) }}
