@@ -30,4 +30,31 @@ export default class RestaurantsCtrl {
         
         res.json(response);
     }
+
+
+    static async apiGetRestaurantsById(req, res, next) {
+        try {
+            const id = req.params.id || {};
+
+            let restaurant = await RestaurantsDAO.getRestaurantsById(id);
+
+            if (!restaurant) {
+                res.status(404).json({error : "Not Found"});
+            } else {
+                res.json(restaurant);
+            }
+        } catch(err) {
+            console.log(`api, ${err}`);
+            res.status(500).json({error : err.message});
+        }
+    }
+
+    static async apiGetRestaurantsCuisines(req, res, next) {
+        try {
+            let cuisines = await RestaurantsDAO.getCuisines();
+            res.json(cuisines);
+        } catch(err) {
+            res.status(500).json({error : err});
+        }
+    } 
 }

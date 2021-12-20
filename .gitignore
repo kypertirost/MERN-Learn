@@ -1,6 +1,9 @@
+.DS_STORE
+
 backend/.env
 backend/node_modules
-.DS_STORE
+
+frontend/node_modules
 
 test
 jest.config.js

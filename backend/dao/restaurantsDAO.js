@@ -1,4 +1,7 @@
-var restaurants;
+import mongodb from "mongodb";
+const ObjectId = mongodb.ObjectId;
+
+let restaurants;
 
 export default class RestaurantsDAO {
     static async injectDB(conn) {
@@ -59,6 +62,58 @@ export default class RestaurantsDAO {
                 restaurantsList:[],
                 totalNumberRestaurants: 0
             };
+        }
+    }
+
+    static async getRestaurantsById(id) {
+        try {
+            const pipeline = [
+                {
+                    $match: {
+                        _id: new ObjectId(id),
+                    },
+                },
+                      {
+                          $lookup: {
+                              from: "reviews",
+                              let: {
+                                  id: "$_id",
+                              },
+                              pipeline: [
+                                  {
+                                      $match: {
+                                          $expr: {
+                                              $eq: ["$restaurant_id", "$$id"],
+                                          },
+                                      },
+                                  },
+                                  {
+                                      $sort: {
+                                          date: -1,
+                                      },
+                                  },
+                              ],
+                              as: "reviews",
+                          },
+                      },
+                      {
+                          $addFields: {
+                              reviews: "$reviews",
+                          },
+                      },
+                  ]
+            return await restaurants.aggregate(pipeline).next();
+        } catch(err) {
+            return {"error" : err};
+        }
+    }
+
+    static async getCuisines() {
+        try {
+            let cuisines = await restaurants.distinct("cuisine");
+            return cuisines;
+        } catch(e){
+            return [];
         }
     }
 }
