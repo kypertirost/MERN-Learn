@@ -2,11 +2,11 @@ import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import AddReview from "./components/add-reviews";
-import Login from "./components/login";
-import Restaurant from "./components/restaurant";
-import RestaurantsList from "./components/restaurants-list";
-
+import AddReview from "./components/add-reviews.js";
+import Login from "./components/login.js";
+import Restaurant from "./components/restaurant.js";
+import RestaurantsList from "./components/restaurants-list.js";
+import EditReview from "./components/edit-reviews.js"
 function App() {
   const [user, setUser] = React.useState(null);
 
@@ -51,21 +51,19 @@ function App() {
           <Route path={"/restaurants"} element={<RestaurantsList />} />
           <Route 
             path="/restaurants/:id/review"
-            render={(props) => (
-              <AddReview {...props} user={user} />
-            )}
+            element = {<AddReview user ={user}/>}
+          />
+          <Route 
+            path="/restaurants/:id/edit/review/:reviewId"
+            element = {<EditReview user ={user}/>}
           />
           <Route 
             path="/restaurants/:id"
-            render={(props) => (
-              <Restaurant {...props} user={user} />
-            )}
+            element = {<Restaurant user ={user}/>}
           />
           <Route 
             path="/login"
-            render={(props) => (
-              <Login {...props} login={login} />
-            )}
+            element = {<Login login ={login}/>}
           />
         </Routes>
       </div>

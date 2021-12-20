@@ -21,3 +21,15 @@ This is the simple restaurant review project using MERN stack. The orinal video 
     2. Need to replace `component` to `element` with appropriate content changes.
     3. Need to split multiple paths into different `Route`. 
     4. Need to delete all `exact` option.
+
+4. When writing the front-end function, it constantly throws `_services_restaurant_js__WEBPACK_IMPORTED_MODULE_1__.default.getCuisines is not a function` and similiar for `getAll` functions. 
+
+    **Solution**: For the methods in `RestaurantDataService`, they are all instance method which requires initilize the object to operates. I couldn't believe I made this mistake and debuging it for almost an hour! It doesn't need to create such object but make all methods static make best sense for me. 
+
+5. In `react-dom-route` v6 model, `props.history` is `undefined` so cannot use this to redirect to the last page. 
+
+    **Solution**: Again, follow the [documentation](https://reactrouter.com/docs/en/v6/upgrading/v5). `useHistory` is replaced with `useNavigate` instead. Not passing through props but call this function to `navigate(<path>)` to desired location.
+
+6. For editing reviews, function uses `state` variable to store the current review information. But `props` or `location` no longer use that since we don't call render function in the `App.js` as using `element` option. 
+
+    **Solution**: Create another handler and pass the review id to the uri to get the necessary information. This is not an optimal fix. But with limited knowledge of v6 `react-dom-router`, it is the appropriate temp fix.

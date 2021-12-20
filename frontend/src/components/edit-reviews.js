@@ -2,20 +2,12 @@ import React, { useState } from "react";
 import RestaurantDataService from "../services/restaurant";
 import { Link, useParams } from "react-router-dom";
 
-const AddReview = props => {
+const EditReview = props => {
   let initialReviewState = ""
 
-  let editing = false;
-
-  console.log(props);
-  // if (props.location.state && props.location.state.currentReview) {
-  //   editing = true;
-  //   initialReviewState = props.location.state.currentReview.text
-  // }
-  let { id } = useParams()
+  let { id, reviewId } = useParams()
   const [review, setReview] = useState(initialReviewState);
   const [submitted, setSubmitted] = useState(false);
-
   const handleInputChange = event => {
     setReview(event.target.value);
   };
@@ -27,15 +19,16 @@ const AddReview = props => {
       user_id: props.user.id,
       restaurant_id: id
     };
-    RestaurantDataService.createReview(data)
-      .then(response => {
+
+    data.review_id = reviewId
+    RestaurantDataService.updateReview(data)
+    .then(response => {
         setSubmitted(true);
         console.log(response.data);
-      })
-      .catch(e => {
+    })
+    .catch(e => {
         console.log(e);
-      });
-
+    });
 
   };
 
@@ -53,7 +46,7 @@ const AddReview = props => {
         ) : (
           <div>
             <div className="form-group">
-              <label htmlFor="description"> Create Review</label>
+              <label htmlFor="description"> Edit Review</label>
               <input
                 type="text"
                 className="form-control"
@@ -81,4 +74,4 @@ const AddReview = props => {
   );
 };
 
-export default AddReview;
+export default EditReview;
